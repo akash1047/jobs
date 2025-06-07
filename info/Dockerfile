@@ -12,7 +12,7 @@ FROM alpine:latest
 RUN addgroup -g 1001 -S appgroup && \
     adduser -u 1001 -S appuser -G appgroup
 
-WORKDIR /root/
+WORKDIR /app
 COPY --from=builder /app/info .
 RUN chown appuser:appgroup info
 USER appuser
