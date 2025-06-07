@@ -1,0 +1,45 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build',
+      '-t', '${_ARTIFACT_REGISTRY_REPO}/hello:${SHORT_SHA}',
+      '-t', '${_ARTIFACT_REGISTRY_REPO}/hello:latest',
+      '.'
+    ]
+    dir: 'hello'
+
+  # Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      '${_ARTIFACT_REGISTRY_REPO}/hello:${SHORT_SHA}'
+    ]
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'push',
+      '${_ARTIFACT_REGISTRY_REPO}/hello:latest'
+    ]
+
+# Substitution variables
+substitutions:
+  # Default values - these can be overridden when triggering the build
+  _ARTIFACT_REGISTRY_REPO: 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloud-run-source-deploy/jobs'
+
+# Options
+options:
+  # Use high-performance machine type for faster builds
+  machineType: 'E2_HIGHCPU_8'
+  # Increase disk size if needed for large builds
+  diskSizeGb: 100
+  # Enable logging
+  logging: CLOUD_LOGGING_ONLY
+
+# Build timeout (default is 10m, increase if needed)
+timeout: '1200s'
+
+# Images that will be pushed to the registry
+images:
+  - '${_ARTIFACT_REGISTRY_REPO}/hello:${SHORT_SHA}'
+  - '${_ARTIFACT_REGISTRY_REPO}/hello:latest'
