@@ -1,0 +1,8 @@
+bin/
+*.exe
+*.log
+.git/
+.gitignore
+README.md
+Dockerfile
+.dockerignore
