@@ -21,7 +21,7 @@ steps:
     ]
 
 substitutions:
-  _CONTAINER: 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloud-run-source-deploy/jobs/hello'
+  _CONTAINER: 'us-central1-docker.pkg.dev/${PROJECT_ID}/cloud-run-source-deploy/jobs/info'
 
 options:
   logging: CLOUD_LOGGING_ONLY
